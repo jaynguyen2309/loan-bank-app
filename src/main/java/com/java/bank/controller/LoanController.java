@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,11 +42,11 @@ public class LoanController {
         try {
             responseDto.setData(loanService.createLoan(request));
             responseDto.setMessage("Success");
+            return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             responseDto.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
         }
-
-        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("")
@@ -68,11 +69,11 @@ public class LoanController {
             }
             responseDto.setData(loanList);
             responseDto.setMessage("Success");
+            return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             responseDto.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
         }
-
-        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/total")
@@ -84,11 +85,11 @@ public class LoanController {
         try {
             responseDto.setData(loanService.getTotalLoan(userId, status));
             responseDto.setMessage("Success");
+            return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             responseDto.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
         }
-
-        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/limit")
@@ -99,11 +100,11 @@ public class LoanController {
         try {
             responseDto.setData(loanService.getLoanLimitByType(creditFacilityId, loanType));
             responseDto.setMessage("Success");
+            return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             responseDto.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
         }
-
-        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/{id}")
@@ -119,10 +120,10 @@ public class LoanController {
         try {
             responseDto.setData(existingLoan.get());
             responseDto.setMessage("Success");
+            return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             responseDto.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
         }
-
-        return ResponseEntity.ok(responseDto);
     }
 }

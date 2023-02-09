@@ -45,11 +45,11 @@ public class UserController {
 
             responseDto.setData(userResponseDto);
             responseDto.setMessage("Success");
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
         } catch (Exception e) {
             responseDto.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
         }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
 //    @PostMapping("/search")

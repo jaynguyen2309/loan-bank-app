@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,10 +55,12 @@ public class PaymentController {
         try {
             responseDto.setData(paymentService.getLoanPayments(loanId, page, size));
             responseDto.setMessage("Success");
+            return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             responseDto.setMessage(e.getMessage());
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(responseDto);
         }
-
-        return ResponseEntity.ok(responseDto);
     }
 }
